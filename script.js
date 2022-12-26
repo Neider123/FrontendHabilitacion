@@ -16,7 +16,7 @@ $("#verNoticias").click(function(event){
             <td>${data[i].url}</td>
             <td>${data[i].resumen}</td>
               <td><button class="btn btn-warning" id="editarUsuarios">Editar</button></td> 
-              <td><button class="btn btn-danger" onclick="eliminarU(${data[i].id}) id="eliminarUsuarios">Eliminar</button></td>
+              <td><button class="btn btn-danger" onclick="deleteNews(${data[i].id}) id="eliminarUsuarios">Eliminar</button></td>
               </tr>`
         }
         document.getElementById('dataTienda').innerHTML=body
@@ -27,6 +27,40 @@ $("#verNoticias").click(function(event){
 $("#agregarNoticias").click(function(event){
     $("#contenedorU").load('formularioNoticia.html')
 })
+
+
+function deleteNews(id){
+       
+    fetch('http://localhost:8080/news/'+id,{
+        method:'DELETE',
+        headers:{
+            "Content-type":"application/json"
+        }
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        Swal.fire({
+            icon: 'success',
+            title: 'Movimiento Eliminado',
+            text: news,
+            timer: 1000,
+            footer: '<p class="fw-bolder" >Noticias UFPS</p>'
+          })
+
+    
+
+    })
+    .catch(err=>{
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No se pudo eliminar movimiento!',
+            timer:1000,
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
+    })
+
+}
 
 
 
